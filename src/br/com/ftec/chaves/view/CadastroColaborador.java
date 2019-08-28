@@ -5,6 +5,11 @@
  */
 package br.com.ftec.chaves.view;
 
+import br.com.ftec.chaves.model.Colaborador;
+import br.com.ftec.control.ColaboradoresDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ADM
@@ -16,6 +21,7 @@ public class CadastroColaborador extends javax.swing.JFrame {
      */
     public CadastroColaborador() {
         initComponents();
+        
     }
 
     /**
@@ -236,7 +242,27 @@ public class CadastroColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+
+        Colaborador colaborador = new Colaborador();
+        colaborador.setNome(txtNome.getText());
+        colaborador.setCpf(txtCPF.getText());
+        colaborador.setSenha(txtSenha.getText());
+        colaborador.setEmail(txtEmail.getText());
+        colaborador.setTelefone(txtTelefone.getText());
+        
+        ColaboradoresDAO dao = new ColaboradoresDAO();
+        
+        try {
+            dao.salvar(colaborador);
+            this.dispose();
+            Principal p =new Principal();
+            p.setVisible(true);
+            
+            
+            // TODO add your handling code here:
+        } catch (Exception ex) {
+            Logger.getLogger(CadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

@@ -6,6 +6,9 @@
 package br.com.ftec.chaves.view;
 
 import br.com.ftec.chaves.model.Sala;
+import br.com.ftec.control.SalaDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,6 +54,7 @@ public class CadastroSalas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("CADASTRO DE SALAS");
 
+        txtNome.setText("aaaaa");
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
@@ -61,10 +65,12 @@ public class CadastroSalas extends javax.swing.JFrame {
 
         txtDescricao.setColumns(20);
         txtDescricao.setRows(5);
+        txtDescricao.setText("qqqq");
         jScrollPane1.setViewportView(txtDescricao);
 
         jLabel4.setText("Capacidade:");
 
+        txtTipo.setText("qqqq");
         txtTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTipoActionPerformed(evt);
@@ -170,34 +176,43 @@ public class CadastroSalas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTipoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-    Sala sala = new Sala();
-    sala.setSala(txtNome.getText());
-    sala.setCapacidade(txtCapacidade.getValue().toString());
-    sala.setDescricao(txtDescricao.getText());
-    sala.setTipo(txtTipo.getText());
-    
+        Sala sala = new Sala();
+        sala.setSala(txtNome.getText());
+        sala.setCapacidade(txtCapacidade.getValue().toString());
+        sala.setDescricao(txtDescricao.getText());
+        sala.setTipo(txtTipo.getText());
 
-    String mensagem = "sala" + sala.getSala()+
-            "\n capacidade:"+sala.getCapacidade()+
-            "\n Obs:"+sala.getDescricao()+
-            "\n tipo:"+sala.getTipo()+
-            "\n\n Salvo com sucesso!"; // TODO add your handling code here:
-    
-     int confirma =JOptionPane.showConfirmDialog(this," deseja salvar os dados \n"+mensagem);
-     if(confirma == JOptionPane.YES_OPTION){
-         JOptionPane.showMessageDialog(this,"salvo com sucesso!");
-         txtCapacidade.setValue(0);
-         txtDescricao.setText("");
-         txtNome.setText("");
-         txtTipo.setText("");
-         
-     }else if ( confirma == JOptionPane.NO_OPTION){
-        this.setVisible(false);//fechar pagina atual
-        Principal p =new Principal();
-        p. setVisible(true);//abre pagina atual
-     }else{
-         
-     }
+        String mensagem = "sala" + sala.getSala()
+                + "\n capacidade:" + sala.getCapacidade()
+                + "\n Obs:" + sala.getDescricao()
+                + "\n tipo:" + sala.getTipo()
+                + "\n\n Salvo com sucesso!"; // TODO add your handling code here:
+
+        int confirma = JOptionPane.showConfirmDialog(this, " deseja salvar os dados \n" + mensagem);
+        if (confirma == JOptionPane.YES_OPTION) {
+            txtCapacidade.setValue(0);
+            txtDescricao.setText("");
+            txtNome.setText("");
+            txtTipo.setText("");
+            SalaDAO dao = new SalaDAO();
+            try {
+                dao.salvar(sala);
+                this.dispose();
+                Principal rs = new Principal();
+                rs.setVisible(true);
+                
+            } catch (Exception ex) {
+                Logger.getLogger(CadastroSalas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(this, "salvo com sucesso!");
+
+        } else if (confirma == JOptionPane.NO_OPTION) {
+            this.setVisible(false);//fechar pagina atual
+            Principal p = new Principal();
+            p.setVisible(true);//abre pagina atual
+        } else {
+
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
