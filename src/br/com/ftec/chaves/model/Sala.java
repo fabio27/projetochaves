@@ -1,51 +1,60 @@
-
 package br.com.ftec.chaves.model;
 
-/**
- * @author alinezanin
- */
 public class Sala {
 
-    private String sala;
-    private String descricao;
-    private String capacidade;
-    private String tipo;
+    private String sala, descricao, tipo;
+    private int capacidade;
+    private int id;
 
+    public Sala(String sala, String descricao, String tipo, int capacidade) {
+        this.sala = sala;
+        this.descricao = descricao;
+        this.tipo = tipo;
+        this.capacidade = capacidade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public Sala(){
         
     }
+    
     public String getSala() {
         return sala;
-    }
-
-    public void setSala(String sala) {
-        this.sala = sala;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getCapacidade() {
+    public int getCapacidade() {
         return capacidade;
-    }
-
-    public void setCapacidade(String capacidade) {
-        this.capacidade = capacidade;
     }
 
     public String getTipo() {
         return tipo;
     }
 
+    public void setSala(String sala) {
+        this.sala = sala;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-    
 
 }

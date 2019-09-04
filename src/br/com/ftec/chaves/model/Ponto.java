@@ -1,48 +1,40 @@
-
 package br.com.ftec.chaves.model;
-
 import java.util.Calendar;
-
-/*
- * @author alinezanin
- */
+        
 public class Ponto {
-
+    private String nome, horaRetirada, horaDevolucao;
     private Calendar dia;
-    private Colaborador colaborador;
-    private boolean retirada;
-    private boolean devolucao;
+
+    public String getNome() {
+        return nome;
+    }
 
     public Calendar getDia() {
         return dia;
+    }
+
+    public String getHoraRetirada() {
+        return horaRetirada;
+    }
+
+    public String getHoraDevolucao() {
+        return horaDevolucao;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setDia(Calendar dia) {
         this.dia = dia;
     }
 
-    public Colaborador getColaborador() {
-        return colaborador;
+    public void setHoraRetirada(String horaRetirada) {
+        this.horaRetirada = horaRetirada;
     }
 
-    public void setColaborador(Colaborador colaborador) {
-        this.colaborador = colaborador;
-    }
-
-    public boolean isRetirada() {
-        return retirada;
-    }
-
-    public void setRetirada(boolean retirada) {
-        this.retirada = retirada;
-    }
-
-    public boolean isDevolucao() {
-        return devolucao;
-    }
-
-    public void setDevolucao(boolean devolucao) {
-        this.devolucao = devolucao;
+    public void setHoraDevolucao(String horaDevolucao) {
+        this.horaDevolucao = horaDevolucao;
     }
     
     

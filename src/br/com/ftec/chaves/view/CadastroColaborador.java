@@ -6,9 +6,7 @@
 package br.com.ftec.chaves.view;
 
 import br.com.ftec.chaves.model.Colaborador;
-import br.com.ftec.control.ColaboradoresDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,7 +19,6 @@ public class CadastroColaborador extends javax.swing.JFrame {
      */
     public CadastroColaborador() {
         initComponents();
-        
     }
 
     /**
@@ -41,7 +38,6 @@ public class CadastroColaborador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtCPF = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtSenha = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -49,6 +45,7 @@ public class CadastroColaborador extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,43 +54,13 @@ public class CadastroColaborador extends javax.swing.JFrame {
 
         jLabel2.setText("Nome:");
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("CPF:");
-
-        txtCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCPFActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Senha:");
 
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
-            }
-        });
-
         jLabel5.setText("Telefone:");
 
-        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefoneActionPerformed(evt);
-            }
-        });
-
         jLabel6.setText("Email:");
-
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -128,10 +95,10 @@ public class CadastroColaborador extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                            .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                            .addComponent(txtSenha))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -163,8 +130,8 @@ public class CadastroColaborador extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,48 +188,19 @@ public class CadastroColaborador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
-
-    private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCPFActionPerformed
-
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaActionPerformed
-
-    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefoneActionPerformed
-
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
-
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
-        Colaborador colaborador = new Colaborador();
-        colaborador.setNome(txtNome.getText());
-        colaborador.setCpf(txtCPF.getText());
-        colaborador.setSenha(txtSenha.getText());
-        colaborador.setEmail(txtEmail.getText());
-        colaborador.setTelefone(txtTelefone.getText());
         
-        ColaboradoresDAO dao = new ColaboradoresDAO();
+       /* Criar um objeto do tipo colaborador
+        fazer set de todos os atributos pegando os valores da tela
+        chamar o ColaboradorDAO
+        chamar o salvar
+        fechar essa tela
+        abrir o principal.*/
         
-        try {
-            dao.salvar(colaborador);
-            this.dispose();
-            Principal p =new Principal();
-            p.setVisible(true);
-            
-            
-            // TODO add your handling code here:
-        } catch (Exception ex) {
-            Logger.getLogger(CadastroColaborador.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        
+        
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -270,9 +208,7 @@ public class CadastroColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        CadastroColaborador aa = new CadastroColaborador();
-        aa.setVisible(false);
-        aa.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     /**
@@ -326,7 +262,7 @@ public class CadastroColaborador extends javax.swing.JFrame {
     private javax.swing.JTextField txtCPF;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }
