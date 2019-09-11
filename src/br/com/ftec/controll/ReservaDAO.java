@@ -5,11 +5,15 @@
  */
 package br.com.ftec.controll;
 
+import br.com.ftec.chaves.model.Colaborador;
 import br.com.ftec.chaves.model.Reserva;
 import br.com.ftec.chaves.model.Sala;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,5 +51,35 @@ public void salvar(Reserva reserva) {
         }
 
     }
+    public List<Reserva> listaReservas() throws ClassNotFoundException, SQLException{
     
+     String sqli = "SELECT * FROM RESERVA";
+     
+     Connection conn = null;
+       PreparedStatement pstm = null;
+       // classe que vai recuperar dados
+       ResultSet rset = null;
+       ArrayList<Reserva> listareservas = new ArrayList<Reserva>();
+       
+       conn = ConnectionFactory.createConnectionToMySQL();
+       pstm = conn.prepareStatement(sqli);
+       rset= pstm.executeQuery();
+       
+       while(rset.next()){
+           
+       Reserva reserva = new Reserva();
+       Colaborador c =new Colaborador();
+       Sala s = new Sala();
+       c.setId(rset.getInt("id_colaborador"));
+       reserva.setColaborador (c);
+       s.setId(rset.getInt("id sala"));
+       reserva.setSala(s);
+       reserva.setDia(rset.getString("dia"));
+       reserva.setTurno(rset.getString("turno"));
+       listareservas.add(reserva);
+           
+           
+       }
+        return listareservas; 
+    }
 }

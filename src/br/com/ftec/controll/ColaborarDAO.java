@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -79,6 +81,33 @@ public class ColaborarDAO {
         return colaborador;
     }
 
-  
-
+  public List<Colaborador> listaColaboradores() throws ClassNotFoundException, SQLException{
+    
+     String sqli = "SELECT * FROM COLABORADOR";
+     
+     Connection conn = null;
+       PreparedStatement pstm = null;
+       // classe que vai recuperar dados
+       ResultSet rset = null;
+       ArrayList<Colaborador> listaColaboradores = new ArrayList<Colaborador>();
+       
+       conn = ConnectionFactory.createConnectionToMySQL();
+       pstm = conn.prepareStatement(sqli);
+       rset= pstm.executeQuery();
+       
+       while(rset.next()){
+           
+       Colaborador colaborador = new Colaborador();
+           colaborador.setId(rset.getInt("id"));
+            colaborador.setEmail(rset.getString("email"));
+            colaborador.setNome(rset.getString("nome"));
+            colaborador.setSenha(rset.getString("Senha"));
+            colaborador.setTelefone(rset.getString("telefone"));
+           colaborador.setCpf(rset.getString("cpf"));
+           listaColaboradores.add(colaborador);
+           
+           
+       }
+        return listaColaboradores;
+  }
 }
