@@ -72,7 +72,7 @@ public void salvar(Reserva reserva) {
        Sala s = new Sala();
        c.setId(rset.getInt("id_colaborador"));
        reserva.setColaborador (c);
-       s.setId(rset.getInt("id sala"));
+       s.setId(rset.getInt("id_sala"));
        reserva.setSala(s);
        reserva.setDia(rset.getString("dia"));
        reserva.setTurno(rset.getString("turno"));

@@ -1,3 +1,5 @@
+
+  
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -46,7 +48,6 @@ public class SalaDAO {
             pstm.setString(4, sala.getTipo());
             pstm.execute(); // executa o sql
 
-
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SalaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -54,60 +55,70 @@ public class SalaDAO {
         }
 
     }
-public Sala buscaSalaPorSala(String sala) throws ClassNotFoundException, SQLException{
-        
-       String sql ="SELECT * FROM SALA WHERE SALA= '"+sala+"'";
-               
-       Connection conn = null;
-       PreparedStatement pstm = null;
-       // classe que vai recuperar dados
-       ResultSet rset = null;
-       
-       Sala sl= new Sala();
-       conn = ConnectionFactory.createConnectionToMySQL();
-       pstm = conn.prepareStatement(sql);
-       rset= pstm.executeQuery();//executa o sql
-       
-       while(rset.next()){
-           
-           sl.setId(rset.getInt("id"));
-           sl.setDescricao(rset.getString("descricao"));
-           sl.setSala(rset.getString("sala"));
-           sl.setTipo(rset.getString("tipo"));
-           sl.setCapacidade(rset.getInt("capacidade"));   
-       }
-       return sl;
+
+    public Sala buscaSalaPorSala(String sala) throws ClassNotFoundException, SQLException {
+
+        String sql = "SELECT * FROM SALA WHERE SALA = '"+sala+"'";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        //Classe que vai recuperar os dados do banco de dados
+        ResultSet rset = null;
+
+        Sala sl = new Sala();
+
+        conn = ConnectionFactory.createConnectionToMySQL();
+        pstm = conn.prepareStatement(sql);
+        rset = pstm.executeQuery();
+
+        while (rset.next()) {
+            sl.setId(rset.getInt("id"));
+            sl.setDescricao(rset.getString("descricao"));
+            sl.setSala(rset.getString("sala"));
+            sl.setTipo(rset.getString("tipo"));
+            sl.setCapacidade(rset.getInt("capacidade"));
+        }
+        return sl;
+
     }
 
-public List<Sala> listaSala() throws ClassNotFoundException, SQLException{
-    
-     String sqli = "SELECT * FROM SALA";
-     
-     Connection conn = null;
-       PreparedStatement pstm = null;
-       // classe que vai recuperar dados
-       ResultSet rset = null;
-       ArrayList<Sala> listaSalas = new ArrayList<Sala>();
-       
-       conn = ConnectionFactory.createConnectionToMySQL();
-       pstm = conn.prepareStatement(sqli);
-       rset= pstm.executeQuery();
-       while(rset.next()){
-           
-           Sala s = new Sala();
-           s.setId(rset.getInt("id"));
-           s.setDescricao(rset.getString("descricao"));
-           s.setSala(rset.getString("sala"));
-           s.setTipo(rset.getString("tipo"));
-           s.setCapacidade(rset.getInt("capacidade"));
-           listaSalas.add(s);
-           
-       }
+    public List<Sala> listaSalas() throws ClassNotFoundException, SQLException {
+
+        String sqli = "SELECT * FROM SALA";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        //Classe que vai recuperar os dados do banco de dados
+        ResultSet rset = null;
+
+        ArrayList<Sala> listaSalas = new ArrayList<Sala>();
+
+        conn = ConnectionFactory.createConnectionToMySQL();
+        pstm = conn.prepareStatement(sqli);
+        rset = pstm.executeQuery();
+        
+        while(rset.next()){
+            Sala s = new Sala();
+            s.setId(rset.getInt("id"));
+            s.setDescricao(rset.getString("descricao"));
+            s.setSala(rset.getString("sala"));
+            s.setTipo(rset.getString("tipo"));
+            s.setCapacidade(rset.getInt("capacidade"));
+            listaSalas.add(s);
+        }
+
         return listaSalas;
-     }
+    }
 
-}     
-       
-   
+    public void excluirSala(int id) throws ClassNotFoundException, SQLException {
+      
+        String sql = "delete from sala where id = "+id;
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        //Classe que vai recuperar os dados do banco de dados
+        conn = ConnectionFactory.createConnectionToMySQL();
+        pstm = conn.prepareStatement(sql);
+        pstm.executeUpdate();
+    
+    }
 
-
+}

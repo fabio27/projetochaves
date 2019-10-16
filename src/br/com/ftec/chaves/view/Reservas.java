@@ -5,13 +5,19 @@
  */
 package br.com.ftec.chaves.view;
 
+import br.com.ftec.chaves.model.Colaborador;
 import br.com.ftec.chaves.model.Reserva;
-import br.com.ftec.controll.ColaborarDAO;
+import br.com.ftec.chaves.model.Sala;
+import br.com.ftec.controll.ColaboradorDAO;
 import br.com.ftec.controll.ReservaDAO;
 import br.com.ftec.controll.SalaDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,21 +43,20 @@ public class Reservas extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtSala = new javax.swing.JTextField();
-        txtData = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cmbTurno = new javax.swing.JComboBox();
-        txtResponsavel = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnProcurar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         txtSenha = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
+        cmbsala = new javax.swing.JComboBox<>();
+        cmbdia = new javax.swing.JComboBox<>();
+        cmbresponsavel = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbReservas = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        btnReservarSala = new javax.swing.JMenu();
         btnCadastroSala = new javax.swing.JMenu();
         btnCadastroColaborador = new javax.swing.JMenu();
 
@@ -60,10 +65,6 @@ public class Reservas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Sala:");
 
-        txtSala.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        txtData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("dia da semana");
 
@@ -71,12 +72,10 @@ public class Reservas extends javax.swing.JFrame {
         jLabel3.setText("Turno:");
 
         cmbTurno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cmbTurno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtResponsavel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtResponsavel.addActionListener(new java.awt.event.ActionListener() {
+        cmbTurno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "manha", "tarde", "noite" }));
+        cmbTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtResponsavelActionPerformed(evt);
+                cmbTurnoActionPerformed(evt);
             }
         });
 
@@ -91,102 +90,99 @@ public class Reservas extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
         txtSenha.setText("jPasswordField1");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Senha:");
 
+        cmbsala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbsala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbsalaActionPerformed(evt);
+            }
+        });
+
+        cmbdia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "segunda-feira", "terça-feira", "quarta_feira", "quinta feira", "sexta-feira", "sabado", "domingo" }));
+
+        cmbresponsavel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        tbReservas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "colaborador", "dia", "sala", "turno"
+            }
+        ));
+        jScrollPane2.setViewportView(tbReservas);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(556, 556, 556)
+                .addComponent(jSeparator1)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSala, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtResponsavel))
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel1)))
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(48, 48, 48)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53))
+                            .addComponent(cmbdia, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbresponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnProcurar)))))
-                .addContainerGap())
+                                .addComponent(btnProcurar))
+                            .addComponent(cmbsala, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cmbsala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbdia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cmbresponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProcurar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProcurar)
+                    .addComponent(jLabel7))
+                .addGap(97, 97, 97)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        btnReservarSala.setText("Reservar sala");
-        btnReservarSala.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnReservarSalaMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(btnReservarSala);
 
         btnCadastroSala.setText("Cadastrar sala");
         btnCadastroSala.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,61 +206,93 @@ public class Reservas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnReservarSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReservarSalaMouseClicked
-        new Principal().setVisible(true);
-    }//GEN-LAST:event_btnReservarSalaMouseClicked
-
     private void btnCadastroSalaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastroSalaMouseClicked
-       
+       CadastroSala cs = new CadastroSala();
+       cs.setVisible(true);
+       this.setVisible(false);
     }//GEN-LAST:event_btnCadastroSalaMouseClicked
 
     private void btnCadastroColaboradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastroColaboradorMouseClicked
         //new LoginColaborador().setVisible(true);
-  
+       CadastroColaborador cc = new CadastroColaborador();
+       cc.setVisible(true);
+       this.setVisible(false);
     }//GEN-LAST:event_btnCadastroColaboradorMouseClicked
 
-    private void txtResponsavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResponsavelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtResponsavelActionPerformed
-
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
-      Reserva r = new Reserva();
-      r.setDia(txtData.getText());
-      r.setTurno(cmbTurno.getSelectedItem(). toString());
-      
-        ColaborarDAO c = new ColaborarDAO();
+        Reserva r = new Reserva();
+        r.setDia(cmbdia.getSelectedItem().toString());
+        r.setTurno(cmbTurno.getSelectedItem().toString());
+
+        ColaboradorDAO c = new ColaboradorDAO();
         SalaDAO s = new SalaDAO();
-       
+
         try {
-            r.setColaborador(c.buscaColaboradorCpf(txtResponsavel.getText()));
-            r.setSala(s.buscaSalaPorSala(txtSala.getText()));
+            r.setColaborador(c.buscaColaboradorCpf(cmbresponsavel.getSelectedItem().toString()));
+            r.setSala(s.buscaSalaPorSala(cmbsala.getSelectedItem().toString()));
+
             ReservaDAO DAO = new ReservaDAO();
             DAO.salvar(r);
-// TODO add your handling code here:
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Reservas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Reservas.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+// TODO add your handling code here:
+
     }//GEN-LAST:event_btnProcurarActionPerformed
+
+    private void cmbTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTurnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTurnoActionPerformed
+
+    private void cmbsalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbsalaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbsalaActionPerformed
+    private void montaTabela() throws ClassNotFoundException, SQLException {
+        DefaultTableModel dftm = (DefaultTableModel) tbReservas.getModel();
+        dftm.setNumRows(0);
+        tbReservas.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tbReservas.getColumnModel().getColumn(0).setHeaderValue("Colaborador");
+        tbReservas.getColumnModel().getColumn(1).setPreferredWidth(20);
+        tbReservas.getColumnModel().getColumn(1).setHeaderValue("dia");
+        tbReservas.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tbReservas.getColumnModel().getColumn(2).setHeaderValue("sala");
+        tbReservas.getColumnModel().getColumn(3).setPreferredWidth(20);
+        tbReservas.getColumnModel().getColumn(3).setHeaderValue("turno");
+        ReservaDAO dao = new ReservaDAO();
+
+        for (Reserva r : dao.listaReservas()) {//for(int a=0;a<= listaReservas.size();
+            dftm.addRow(new Object[]{
+                r.getColaborador().getId(),
+                r.getDia(),
+                r.getSala().getId(),
+                r.getTurno(),}
+            );//é um objeto generico por nadd não estar tratado
+
+        }
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) {//não possivel utilizar variave difer de statica
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -291,18 +319,61 @@ public class Reservas extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Reservas().setVisible(true);
+            public void run() {//tela visivel e rodar assim que carrega pagina
+
+                Reservas r = new Reservas();
+                r.setVisible(true);
+
+                try {
+                    r.montaCombosala();
+                    r.montaComboColaborador();
+                    r.montaTabela();
+
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Reservas.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Reservas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
         });
+    }
+
+    public void montaCombosala() throws ClassNotFoundException, SQLException {
+
+        List<Sala> listaSalaObjeto = new ArrayList<>();
+        List<String> listaSaladescricao = new ArrayList<>();
+
+        SalaDAO salaDao = new SalaDAO();
+
+        listaSalaObjeto = salaDao.listaSalas();
+
+        for (int a = 0; a < listaSalaObjeto.size(); a++) {
+            listaSaladescricao.add(listaSalaObjeto.get(a).getSala());
+        }
+        DefaultComboBoxModel dfcmb = new DefaultComboBoxModel(listaSaladescricao.toArray());
+        cmbsala.setModel(dfcmb);
+    }
+
+    public void montaComboColaborador() throws ClassNotFoundException, SQLException {
+
+        List<Colaborador> listaColaboradorObjeto = new ArrayList<>();
+        ColaboradorDAO colaboradorDao = new ColaboradorDAO();
+        listaColaboradorObjeto = colaboradorDao.listaColaboradores();
+        //
+        DefaultComboBoxModel dfcmb = new DefaultComboBoxModel(listaColaboradorObjeto.toArray());
+        cmbresponsavel.setModel(dfcmb);
+        // criar metodo toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu btnCadastroColaborador;
     private javax.swing.JMenu btnCadastroSala;
     private javax.swing.JButton btnProcurar;
-    private javax.swing.JMenu btnReservarSala;
     private javax.swing.JComboBox cmbTurno;
+    private javax.swing.JComboBox<String> cmbdia;
+    private javax.swing.JComboBox<String> cmbresponsavel;
+    private javax.swing.JComboBox<String> cmbsala;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -310,12 +381,9 @@ public class Reservas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtData;
-    private javax.swing.JTextField txtResponsavel;
-    private javax.swing.JTextField txtSala;
+    private javax.swing.JTable tbReservas;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

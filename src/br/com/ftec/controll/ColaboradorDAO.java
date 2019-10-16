@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author ADM
  */
-public class ColaborarDAO {
+public class ColaboradorDAO {
 
     /* Isso é uma sql comum, os ? são os 
          * parâmetros que nós vamos adicionar
@@ -44,14 +44,14 @@ public class ColaborarDAO {
             pstm.setString(2, colaborador.getCpf());
             pstm.setString(3, colaborador.getSenha());
             pstm.setString(4, colaborador.getTelefone());
-            pstm.setString(4, colaborador.getEmail());
+            pstm.setString(5, colaborador.getEmail());
 
             pstm.execute(); // executa o sql
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ColaborarDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ColaboradorDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ColaborarDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ColaboradorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
